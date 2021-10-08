@@ -1,6 +1,5 @@
 """
 Support for Xiaomi Mi Home Air Conditioner Companion (AC Partner Model number KTBL03LM)
-
 For more details about this platform, please refer to the documentation
 https://home-assistant.io/components/climate.xiaomi_miio
 """
@@ -11,6 +10,7 @@ from functools import partial
 from datetime import timedelta
 import voluptuous as vol
 
+from homeassistant.helpers.event import async_call_later
 from homeassistant.components.climate import ClimateEntity, PLATFORM_SCHEMA
 from homeassistant.const import (
     STATE_ON
@@ -49,6 +49,7 @@ SUCCESS = ["ok"]
 DEFAULT_NAME = "Xiaomi AC Companion"
 DATA_KEY = "climate.xiaomi_miio"
 TARGET_TEMPERATURE_STEP = 1
+UPDATE_AFTER_ACTION_TIME = 0.3
 
 DEFAULT_TIMEOUT = 10
 DEFAULT_SLOT = 30
@@ -264,7 +265,6 @@ class XiaomiAirConditioningCompanion(ClimateEntity):
         if new_state is None:
             return
         await self._async_update_temp(new_state)
-        await self.async_update_ha_state()
 
     async def _async_power_sensor_changed(self, entity_id, old_state, new_state):
         """Handle power sensor changes."""
@@ -272,7 +272,6 @@ class XiaomiAirConditioningCompanion(ClimateEntity):
             return
 
         await self._async_update_power_state(new_state)
-        await self.async_update_ha_state()
 
     async def _try_command(self, mask_error, func, *args, **kwargs):
         """Call a AC companion command handling error messages."""
@@ -282,6 +281,14 @@ class XiaomiAirConditioningCompanion(ClimateEntity):
             result = await self.hass.async_add_job(partial(func, *args, **kwargs))
 
             _LOGGER.debug("Response received: %s", result)
+
+            async def async_force_update_later(_):
+                await self.async_update_ha_state(True)
+
+            async_call_later(
+                self.hass,
+                UPDATE_AFTER_ACTION_TIME,
+                async_force_update_later)
 
             return result == SUCCESS
         except DeviceException as exc:
@@ -319,8 +326,7 @@ class XiaomiAirConditioningCompanion(ClimateEntity):
             self._state_attrs.update(
                 {
                     ATTR_LOAD_POWER: state.load_power,
-                    ATTR_TEMPERATURE: state.target_temperature
-                    if state.target_temperature <= self.max_temp else None,
+                    ATTR_TEMPERATURE: state.target_temperature,
                     ATTR_SWING_MODE: state.swing_mode.name.lower(),
                     ATTR_FAN_MODE: state.fan_speed.name.lower(),
                     ATTR_HVAC_MODE: state.mode.name.lower() if self._state else "off",
