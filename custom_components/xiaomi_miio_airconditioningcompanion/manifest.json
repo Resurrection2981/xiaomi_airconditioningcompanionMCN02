@@ -1,15 +1,14 @@
 {
   "domain": "xiaomi_miio_airconditioningcompanionmcn02",
-  "name": "Xiaomi Air Conditioning Companion 2",
-  "documentation": "https://github.com/EugeneLiu/xiaomi_airconditioningcompanionMCN02",
-  "issue_tracker": "https://github.com/EugeneLiu/xiaomi_airconditioningcompanionMCN02/issues",
-  "version": "0.1.7",
+  "name": "小米空调伴侣2",
+  "documentation": "https://github.com/Resurrection2981/xiaomi_airconditioningcompanionMCN02",
+  "version": "0.1.8",
   "requirements": [
     "construct==2.9.45",
     "python-miio>0.5.3"
   ],
   "dependencies": ["sensor"],
   "codeowners": [
-    "@EugeneLiu"
+    "@Resurrection2981"
   ]
 }
