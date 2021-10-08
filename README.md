@@ -1,4 +1,9 @@
-# Xiaomi Air Conditioning Companion 2
+# Xiaomi Air Conditioning Companion 2 小米空调伴侣2
+
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
+
+## Statement
+This fork trying to improve response time, thanks to [EugeneLiu](https://github.com/EugeneLiu/xiaomi_airconditioningcompanionMCN02) and [fireinice](https://github.com/fireinice/xiaomi_airconditioningcompanionMCN02/blob/dbbe2cd2d4aa19d5ba011765f3a38f41d781b65c/custom_components/xiaomi_miio_airconditioningcompanion/climate.py)
 
 This is a custom component for home assistant to integrate the Xiaomi Mi Air Conditioning Companion 2:
 
@@ -28,7 +33,7 @@ Credits: Thanks to [Rytilahti](https://github.com/rytilahti/python-miio) for all
 
 ## Install
 
-You can install this custom component by adding this repository ([https://github.com/EugeneLiu/xiaomi_airconditioningcompanionMCN02](https://github.com/EugeneLiu/xiaomi_airconditioningcompanionMCN02/)) to [HACS](https://hacs.xyz/) in the settings menu of HACS first. You will find the custom component in the integration menu afterwards, look for 'Xiaomi Mi and Aqara Air Conditioning Companion Integration'. Alternatively, you can install it manually by copying the custom_component folder to your Home Assistant configuration folder.
+You can install this custom component by adding this repository ([https://github.com/Resurrection2981/xiaomi_airconditioningcompanionMCN02](https://github.com/Resurrection2981/xiaomi_airconditioningcompanionMCN02/)) to [HACS](https://hacs.xyz/) in the settings menu of HACS first. You will find the custom component in the integration menu afterwards, look for 'Xiaomi Mi and Aqara Air Conditioning Companion Integration'. Alternatively, you can install it manually by copying the custom_component folder to your Home Assistant configuration folder.
 
 
 ## Setup
@@ -41,7 +46,7 @@ climate:
     name: xiaomi Air Conditioning Companion 2
     host: 
     token: 
-    target_sensor: sensor.temperature_158d0001f53706
+    target_sensor: sensor.room_temperature
     scan_interval: 60
 ```
 
