@@ -1,4 +1,4 @@
-# Xiaomi Air Conditioning Companion 2 小米空调伴侣2
+# 小米空调伴侣2 Xiaomi Air Conditioning Companion 2
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
 
